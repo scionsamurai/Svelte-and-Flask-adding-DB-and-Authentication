@@ -1,8 +1,12 @@
 from flask import Flask
+from flask_login import login_user, LoginManager, logout_user, login_required
 from flask import render_template
 import json
 
 app = Flask(__name__)
+
+login_manager = LoginManager(app)
+login_manager.init_app(app)
 
 @app.route("/")
 def home():
