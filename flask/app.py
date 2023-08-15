@@ -5,8 +5,8 @@ import json
 
 app = Flask(__name__)
 
-login_manager = LoginManager(app)
-login_manager.init_app(app)
+# login_manager = LoginManager(app)
+# login_manager.init_app(app)
 
 @app.route("/")
 def home():

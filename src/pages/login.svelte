@@ -1,27 +1,166 @@
-<script>
-    export let extraData;
-    console.log(extraData);
-    let current_user = extraData['current_user'];
-    let test = extraData['test'];
-    
-</script>
+<svelte:head>
+	<title>login - OurSite</title>
+</svelte:head>
 
-<main class="index">
-    <div class="banner">
-        <h1>Login</h1>
-        <h3>Hello {current_user}!</h3>
-        <span class="banner__right">
-            <a href="/">
-                <h5 class="home_button">Home</h5>
-            </a>
-            <a href="/login">
-                <h5 class="login_button">Login</h5>
-            </a>
-            <a href="/signup">
-                <h5 class="signup_button">Signup</h5>
-            </a>
-        </span>
-    </div>
-    {test}
+
+<main>
+    <form method="post">
+        <h1 class="login-header">Our App Name</h1>
+        <h5 class="login-header2">Log into Account</h5>
+        <div class="form-inputs">
+            <div class="form__group field">
+                <input type="text" class="form__field" placeholder="Name" name="username" id='username' required />
+                <label for="username" class="form__label">Username</label>
+            </div>
+            <div class="form__group field">
+                <input type="password" class="form__field" placeholder="Password" name="password" id='password' required />
+                <label for="password" class="form__label">Password</label>
+            </div>
+            <div class="forgot-password">
+                <a href="/#">Forgot Password?</a>
+            </div>
+
+            <button id="btn" class="signin"  type="submit">Sign In</button>
+        </div>
+    </form>
 </main>
 
+<style lang="scss">
+        
+    h1, h5 {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around;
+        }
+    form {
+        width: 40rem;
+        height: fit-content;
+        margin: 0;
+        background: rgba(0,0,0,0.6);
+        border: 4px solid black;
+        border-radius: 3rem;
+        }
+
+    .forgot-password {
+        font-size: 0.75rem;
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4rem;
+        padding-top: 1rem;
+        a {
+            color: white;
+        }
+        }
+
+    .form-inputs {
+        padding: 0 4rem;
+        }
+
+    .login-header {
+        color: blue;
+        margin: 3rem;
+        }
+    .login-header2 {
+        color: white;
+        }
+
+    .form__group {
+        position: relative;
+        padding: 15px 0 0;
+        margin-top: 10px;
+        justify-content: space-around;
+        display: flex;
+        
+        }
+
+    .form__field {
+        font-family: inherit;
+        width: 60%;
+        color: blue;
+        border: 0;
+        border-bottom: 2px solid gray;
+        outline: 0;
+        font-size: 1.3rem;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+
+        &::placeholder {
+            color: transparent;
+            }
+
+        &:placeholder-shown ~ .form__label {
+            font-size: 1.3rem;
+            cursor: text;
+            top: 20px;
+            }
+        }
+
+    .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: gray;
+        }
+
+    .form__field:focus {
+        ~ .form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: blue;
+            font-weight:700;    
+        }
+        padding-bottom: 6px;  
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right, blue,green);
+        border-image-slice: 1;
+        }
+    .form__field{
+        &:required,&:invalid { box-shadow:none; }
+        }
+
+    main {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: 'Poppins', sans-serif; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-size: 1.5rem;
+        background-size: cover;
+        }
+
+    #btn {
+        background: rgb(90,90,90);
+        min-width: 4rem;
+        border: 2px solid black;
+        border-radius: 10px;
+        color: white;
+        position: relative;
+        transition: 1s;
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+
+        &:hover {
+            background: #222;
+            color: green;
+            }
+        &.signin {
+            height: 2.5rem;
+            margin: 2rem;
+            width: 85%;
+            font-size: 1.5rem;
+            }
+        }
+
+</style>
