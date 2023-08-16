@@ -15,15 +15,15 @@ login_manager.init_app(app)
 @app.route("/")
 @login_required
 def home():
-    return render_template('svelte_main.html', page="index", extra_data=json.dumps({'current_user': "insert user check function here", 'test': "This is a test",}))
+    return render_template('svelte_main.html', page="index", styles="global.css", extra_data=json.dumps({'current_user': "insert user check function here", 'test': "This is a test",}))
 
 @app.route("/login")
 def login_page():
-    return render_template('svelte_main.html', page="login", extra_data=json.dumps({'current_user': "no user yet!", 'test': "mor testing",}))
+    return render_template('svelte_main.html', page="login", styles="loginSignup.css", extra_data=json.dumps({'current_user': "no user yet!", 'test': "mor testing",}))
 
 @app.route("/signup")
 def signup_page():
-    return render_template('svelte_main.html', page="signup", extra_data=json.dumps({'current_user': "Want to be a user?", 'test': "This is another test",}))
+    return render_template('svelte_main.html', page="signup", styles="loginSignup.css", extra_data=json.dumps({'current_user': "Want to be a user?", 'test': "This is another test",}))
 
 
 @app.route('/login/', methods=['GET', 'POST'])

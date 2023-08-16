@@ -1,4 +1,3 @@
-import '../public/global.css';
 import App from './App.svelte';
 
 const target_element = document.getElementById("svelte");

@@ -1,27 +1,26 @@
-<script>
-    export let extraData;
-    console.log(extraData);
-    let current_user = extraData['current_user'];
-    let test = extraData['test'];
-    
-</script>
+<svelte:head>
+	<title>signup - OurSite</title>
+</svelte:head>
 
-<main class="index">
-    <div class="banner">
-        <h1>Signup</h1>
-        <h3>Hello {current_user}!</h3>
-        <span class="banner__right">
-            <a href="/">
-                <h5 class="home_button">Home</h5>
-            </a>
-            <a href="/login">
-                <h5 class="login_button">Login</h5>
-            </a>
-            <a href="/signup">
-                <h5 class="signup_button">Signup</h5>
-            </a>
-        </span>
-    </div>
-    {test}
+<main>
+    <form method="post">
+        <h1 class="login-header">Our App Name</h1>
+        <h5 class="login-header2">Log into Account</h5>
+        <div class="form-inputs">
+            <div class="form__group field">
+                <input type="text" class="form__field" placeholder="Name" name="username" id='username' required />
+                <label for="username" class="form__label">Username</label>
+            </div>
+            <div class="form__group field">
+                <input type="password" class="form__field" placeholder="Password" name="password" id='password' required />
+                <label for="password" class="form__label">Password</label>
+            </div>
+            <div class="forgot-password">
+                <a href="/#">Forgot Password?</a>
+            </div>
+
+            <button id="btn" class="signin"  type="submit">Sign In</button>
+        </div>
+    </form>
 </main>
 

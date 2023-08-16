@@ -1,5 +1,6 @@
 /node_modules/
 /public/build/
 /flask/db/hide/
+/flask/static/resources/
 
 .DS_Store

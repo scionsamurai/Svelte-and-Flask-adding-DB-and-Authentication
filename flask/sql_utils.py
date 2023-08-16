@@ -1,4 +1,6 @@
 import psycopg2
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from db.hide import variables
 
 def get_db_connection():
@@ -46,9 +48,11 @@ class User:
 
     def set_password(self, passwordy):
         self.pw_hash = passwordy
+        # self.pw_hash = generate_password_hash(passwordy)
 
     def check_password(self, passwordx):
         return passwordx == self.password
+        # return check_password_hash(passwordx, self.password)
 
     @staticmethod
     def get(user_name):

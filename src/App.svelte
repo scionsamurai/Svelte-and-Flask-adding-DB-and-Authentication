@@ -41,3 +41,7 @@
 <main>
 	<svelte:component this={pages[page]} {extraData} />
 </main>
+
+<style>
+	@import '/static/global.css';
+</style>
