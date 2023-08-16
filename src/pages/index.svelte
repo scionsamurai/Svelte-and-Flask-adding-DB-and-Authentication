@@ -9,7 +9,6 @@
 <main class="index">
     <div class="banner">
         <h1>INDEX</h1>
-        <h3>Hello {current_user}!</h3>
         <span class="banner__right">
             <a href="/">
                 <h5 class="home_button">Home</h5>

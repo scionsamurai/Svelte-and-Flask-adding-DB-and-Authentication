@@ -16,10 +16,10 @@ cursor = conn.cursor()
 cursor.execute('DROP TABLE IF EXISTS "User";')
 
 # Create the User table
-cursor.execute('CREATE TABLE "User" (username TEXT, password TEXT);')
+cursor.execute('CREATE TABLE "User" (username TEXT, password TEXT, email TEXT);')
 
 # Insert a sample user into the User table
-cursor.execute("INSERT INTO \"User\" VALUES ('admin', 'test123');")
+cursor.execute("INSERT INTO \"User\" VALUES ('admin', 'test123', 'example@email');")
 
 # Commit the changes
 conn.commit()

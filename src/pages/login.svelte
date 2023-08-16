@@ -4,8 +4,8 @@
 
 <main>
     <form method="post">
-        <h1 class="login-header">Our App Name</h1>
-        <h5 class="login-header2">Log into Account</h5>
+        <h1 class="header">Our App Name</h1>
+        <h5 class="header2">Log into Account</h5>
         <div class="form-inputs">
             <div class="form__group field">
                 <input type="text" class="form__field" placeholder="Name" name="username" id='username' required />

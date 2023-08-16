@@ -17,9 +17,11 @@ class User:
     name = ""
     password = ""
 
-    def __init__(self, name="", password=""):
+    def __init__(self, name="", password="", email=""):
         self.name = name
         self.password = password
+        self.password_hash = generate_password_hash(password)
+        self.email = email
         self.id = 0
 
     def is_authenticated(self):
@@ -43,16 +45,60 @@ class User:
     def is_active(self):
         return True
 
-    def get_id(self):
-        return str(self.name)
-
-    def set_password(self, passwordy):
-        self.pw_hash = passwordy
-        # self.pw_hash = generate_password_hash(passwordy)
-
     def check_password(self, passwordx):
-        return passwordx == self.password
-        # return check_password_hash(passwordx, self.password)
+        return check_password_hash(passwordx, self.password)
+
+    def save_to_db(self):
+        query = 'INSERT INTO "User" (username, password, email) VALUES (%s, %s, %s);'
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(query, (self.name, self.password_hash, self.email))  # Store the hashed password
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def is_valid(self, confirm_password):
+        errors = []
+        if not self.name or not self.email or not self.password:
+            errors.append("All Fields are required to proceed.")
+
+        if self.password != confirm_password:
+            print(self.password, confirm_password)
+            errors.append("Passwords do not match.")
+
+        if self.check_duplicate_username():
+            errors.append("Username is already being used.")
+
+        if self.check_duplicate_email():
+            errors.append("Email is already being used.")
+
+        if len(self.password) < 8:
+            errors.append("Password is not long enough.")
+
+        if len(errors):
+            return [False, errors]
+
+        return [True,]
+
+    def check_duplicate_username(self):
+        query = 'SELECT COUNT(*) FROM "User" WHERE username = %s;'
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(query, (self.name,))
+        count = cur.fetchone()[0]
+        cur.close()
+        conn.close()
+        return count > 0
+
+    def check_duplicate_email(self):
+        query = 'SELECT COUNT(*) FROM "User" WHERE email = %s;'
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(query, (self.email,))
+        count = cur.fetchone()[0]
+        cur.close()
+        conn.close()
+        return count > 0
 
     @staticmethod
     def get(user_name):
@@ -64,6 +110,7 @@ class User:
         user = User()
         if data:
             user.name = data[0]
+            user.email = data[2]  # Assuming email is stored at index 2 in the result
             cur.close()
             conn.close()
             return user
@@ -71,4 +118,4 @@ class User:
             cur.close()
             conn.close()
             return None
-
+            

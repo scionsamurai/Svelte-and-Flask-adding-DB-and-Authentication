@@ -1,9 +1,9 @@
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, flash
 from flask_login import login_user, LoginManager, logout_user, login_required
 from flask import render_template
 import json
 
-from utils import redirect_back
+from utils import redirect_back, check_user
 from sql_utils import User
 
 app = Flask(__name__)
@@ -15,16 +15,39 @@ login_manager.init_app(app)
 @app.route("/")
 @login_required
 def home():
-    return render_template('svelte_main.html', page="index", styles="global.css", extra_data=json.dumps({'current_user': "insert user check function here", 'test': "This is a test",}))
-
-@app.route("/login")
-def login_page():
-    return render_template('svelte_main.html', page="login", styles="loginSignup.css", extra_data=json.dumps({'current_user': "no user yet!", 'test': "mor testing",}))
+    return render_template('svelte_main.html', page="index", styles="global.css", extra_data=json.dumps({'current_user': check_user(), 'test': "This is a test",}))
 
 @app.route("/signup")
 def signup_page():
-    return render_template('svelte_main.html', page="signup", styles="loginSignup.css", extra_data=json.dumps({'current_user': "Want to be a user?", 'test': "This is another test",}))
+    return render_template('svelte_main.html', page="signup", styles="loginSignup.css", extra_data=json.dumps({'current_user': check_user(), 'test': "This is another test"}))
 
+@app.route('/signup/', methods=['GET', 'POST'])
+def signup():
+    if request.method == "POST":
+        name = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+        confirm_password = request.form["confirm_password"]
+        
+        user = User(name, password, email)
+        errors = user.is_valid(confirm_password)
+        if errors[0]:
+            user.save_to_db()
+            
+            login_user(user, remember=True)
+            
+            flash("Account created successfully", "success")
+            return redirect_back('home')
+        else:
+            for error in errors[1]:
+                flash(error, "error")
+            return redirect_back('signup_page')
+    else:
+        return redirect_back('signup_page')
+
+@app.route("/login")
+def login_page():
+    return render_template('svelte_main.html', page="login", styles="loginSignup.css", extra_data=json.dumps({'current_user': check_user(), 'test': "mor testing",}))
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -36,9 +59,9 @@ def login():
             login_user(user, remember=True)
             return redirect_back('home')
         else:
-            return render_template('svelte_main.html', page='login')
+            return redirect_back('login_page')
     else:
-        return render_template('svelte_main.html', page='login')
+        return redirect_back('login_page')
 
 @login_manager.user_loader
 def load_user(user_id):
