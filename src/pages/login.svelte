@@ -15,10 +15,10 @@
                 <input type="password" class="form__field" placeholder="Password" name="password" id='password' required />
                 <label for="password" class="form__label">Password</label>
             </div>
-            <div class="forgot-password">
+            <div class="extra-link">
                 <a href="/#">Forgot Password?</a>
+                <a href="/signup">Sign Up?</a>
             </div>
-
             <button id="btn" class="signin"  type="submit">Sign In</button>
         </div>
     </form>

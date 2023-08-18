@@ -14,14 +14,14 @@ form {
   border-radius: 3rem;
 }
 
-.forgot-password {
+.extra-link {
   font-size: 0.75rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding-right: 4rem;
   padding-top: 1rem;
 }
-.forgot-password a {
+.extra-link a {
   color: white;
 }
 

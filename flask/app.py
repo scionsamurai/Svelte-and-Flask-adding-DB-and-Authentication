@@ -21,6 +21,7 @@ def home():
 def signup_page():
     return render_template('svelte_main.html', page="signup", styles="loginSignup.css", extra_data=json.dumps({'current_user': check_user(), 'test': "This is another test"}))
 
+# https://atrium.ai/resources/how-to-implement-oauth-2-0-login-for-python-flask-web-server-applications/      <-----------add oauth
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
