@@ -42,6 +42,9 @@ class User:
             else:
                 return False
 
+    def get_id(self): # used by user_id = getattr(user, current_app.login_manager.id_attribute)() in site-packages/flask_login/utils.py
+        return str(self.name)
+
     def is_active(self):
         return True
 
